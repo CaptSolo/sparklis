@@ -3,3 +3,12 @@
     margin-bottom: 25px;
 }
 
+#iframe-viziquer {
+    border: 1px dotted grey;
+    width: 100%; /* takes precedence over the width set with the HTML width attribute */
+    height: 500px;
+}
+
+#button-viziquer-load {
+    margin-left: 10px;
+}

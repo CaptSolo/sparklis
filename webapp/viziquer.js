@@ -1,7 +1,7 @@
 // reporting that this extension is active
 console.log("ViziQuer extension active");
 
-// ViziQuer button: on click event
+// ViziQuer debug button
 function vq_click_fn() {
     console.log("Debug info:")
     console.log("- endpoint:", sparklis.endpoint());
@@ -12,8 +12,15 @@ function vq_click_fn() {
     console.log(sparklis.currentPlace().sparql());
 }
 
+// ViziQuer loading button
+function vq_load_fn() {
+    $("#iframe-viziquer").attr("src", "https://viziquer.app/");
+}
+
 $(window).on("load", function() {
     $("#button-viziquer").click(vq_click_fn);
+    $("#button-viziquer-load").click(vq_load_fn);
+    $("#iframe-viziquer").attr("src", "");
 } );
 
 // SPARQL hook: displaying the query in the ViziQuer tab
@@ -21,7 +28,8 @@ sparklis_extension.hookSparql =
     function(sparql) {
 
         let vq_div = $("#sparql-query-viziquer");
-        vq_div.html(`<pre>${sparql}</pre>`);
+        let vq_escaped = vq_div.text(sparql).html();
+        vq_div.html(`<pre>${vq_escaped}</pre>`);
 
 	return sparql
 	//console.log("Here a dummy PREFIX is added.");
