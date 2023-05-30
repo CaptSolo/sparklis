@@ -1599,15 +1599,24 @@ let initialize endpoint focus delta =
     jquery "#button-sparklis-view" (onclick (fun elt ev ->
       jquery_show "#sparklis-view";
       jquery_hide "#yasgui-view";
+      jquery_hide "#viziquer-view";
       jquery_hide "#log-view"));
     jquery "#button-yasgui-view" (onclick (fun elt ev ->
       jquery_hide "#sparklis-view";
       jquery_show "#yasgui-view";
+      jquery_hide "#viziquer-view";
+      jquery_hide "#log-view";
+      Jsutils.yasgui#refresh));
+    jquery "#button-viziquer-view" (onclick (fun elt ev ->
+      jquery_hide "#sparklis-view";
+      jquery_hide "#yasgui-view";
+      jquery_show "#viziquer-view";
       jquery_hide "#log-view";
       Jsutils.yasgui#refresh));
     jquery "#button-log-view" (onclick (fun elt ev ->
       jquery_hide "#sparklis-view";
       jquery_hide "#yasgui-view";
+      jquery_hide "#viziquer-view";
       jquery_show "#log-view";
       jquery_set_innerHTML "#endpoint-log"
         (Endpoint_log.html_table history#present#lis#endpoint)));
