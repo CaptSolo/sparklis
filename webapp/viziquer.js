@@ -14,7 +14,7 @@ function vq_click_fn() {
 
 // ViziQuer loading button
 function vq_load_fn() {
-    $("#iframe-viziquer").attr("src", "https://viziquer.app/");
+    $("#iframe-viziquer").attr("src", "https://viziquer.app/public-diagram");
 }
 
 $(window).on("load", function() {
