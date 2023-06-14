@@ -816,7 +816,7 @@ let ajax_external_search_constr ~endpoint (search : Lisql.search) (k : (Lisql.co
        Sparql_endpoint.(ajax_in (* TODO: change this function for promises *)
 			  [] (new ajax_pool)
 			  endpoint (sparql :> string)
-			  (fun results ->
+			  (fun sparql results ->
 			    let lt =
 			      List.fold_left
 				(fun lt binding ->
@@ -830,18 +830,6 @@ let ajax_external_search_constr ~endpoint (search : Lisql.search) (k : (Lisql.co
 
 
 (* hooks for Sparklis extension *)
-   
-let hook_sparql (sparql : string) : string =
-  Config.apply_hook_data
-    Config.sparklis_extension##.hookSparql
-    Sparql.js_sparql_map
-    sparql
-
-let hook_results (res : Sparql_endpoint.results) : Sparql_endpoint.results =
-  Config.apply_hook_data
-    Config.sparklis_extension##.hookResults
-    Sparql_endpoint.js_results_map
-    res
 
 let hook_suggestions : (freq_unit * suggestions) -> (freq_unit * suggestions) =
   let open Jsutils in
@@ -984,17 +972,17 @@ object (self)
       match new_sparql_opt with
       | None ->
          results_ok <- true;
-         sparql_opt <- new_sparql_opt;
+         sparql_opt <- None;
          results <- Sparql_endpoint.empty_results;
          self#define_results_views;
          k ()
       | Some sparql ->
-         let sparql = hook_sparql sparql in (* TODO: should the original query be hidden? *)
-	 Sparql_endpoint.ajax_in ~update_yasgui:true elts ajax_pool endpoint sparql
-	   (fun res ->
-             let res = hook_results res in
+	 Sparql_endpoint.ajax_in
+           ~main_query:true (* updating YASGUI, and hooking the query and results *)
+           elts ajax_pool endpoint sparql
+	   (fun sparql res ->
              results_ok <- true;
-             sparql_opt <- new_sparql_opt;
+             sparql_opt <- Some sparql;
 	     results <- res;
              self#define_results_views;
              k ())
@@ -1143,7 +1131,7 @@ object (self)
        let froms = Sparql_endpoint.config_default_graphs#froms in
        let sparql : string = query_count var ~froms () in
        Sparql_endpoint.ajax_in elts ajax_pool endpoint sparql
-	 (fun res ->
+	 (fun sparql res ->
 	  let count_opt =
 	    match Sparql_endpoint.float_of_results res with
 	    | Some f -> Some (int_of_float f)
@@ -1189,7 +1177,7 @@ object (self)
                          filter (log_not (expr_func "isBlank" [var "term"])) ])
                :> string)) in
     Sparql_endpoint.ajax_in ~tentative:true elts ajax_pool endpoint sparql_term (* tentative because uses a non-standard feature 'bif:contains' *)
-      (fun results_term -> process results_term)
+      (fun _ results_term -> process results_term)
       (fun code -> k (Result.Error (Failure ("Initial term suggestions: HTTP error code " ^ string_of_int code))))
 
   method ajax_forest_terms_inputs_ids ?(inverse = false) constr elts (k : (suggestions, exn) Result.t -> unit) =
