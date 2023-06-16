@@ -14,7 +14,24 @@ function vq_click_fn() {
 
 // ViziQuer loading button
 function vq_load_fn() {
-    $("#iframe-viziquer").attr("src", "https://viziquer.app/public-diagram");
+
+    let data = {
+        "query": sparklis.currentPlace().sparql(),
+        "endpoint": sparklis.endpoint()
+    }
+
+    $.post("https://viziquer.app/api/public-diagram", data, function(json) {
+        console.log(json);
+
+        if (json.statusCode == 200) {
+            let vq_url = "https://viziquer.app" + json.response.url;
+            console.log(vq_url);
+            $("#iframe-viziquer").attr("src", vq_url);
+        }
+
+    }, "json");
+
+    // $("#iframe-viziquer").attr("src", "https://viziquer.app/public-diagram");
 }
 
 $(window).on("load", function() {
