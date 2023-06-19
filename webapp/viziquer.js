@@ -34,9 +34,31 @@ function vq_load_fn() {
     // $("#iframe-viziquer").attr("src", "https://viziquer.app/public-diagram");
 }
 
+// ViziQuer open in new tab (button)
+function vq_new_fn() {
+
+    let data = {
+        "query": sparklis.currentPlace().sparql(),
+        "endpoint": sparklis.endpoint()
+    }
+
+    $.post("https://viziquer.app/api/public-diagram", data, function(json) {
+        console.log(json);
+
+        if (json.statusCode == 200) {
+            let vq_url = "https://viziquer.app" + json.response.url;
+            console.log(vq_url);
+            window.open(vq_url);
+        }
+
+    }, "json");
+}
+
+
 $(window).on("load", function() {
     $("#button-viziquer").click(vq_click_fn);
     $("#button-viziquer-load").click(vq_load_fn);
+    $("#button-viziquer-new").click(vq_new_fn);
     $("#iframe-viziquer").attr("src", "");
 } );
 
