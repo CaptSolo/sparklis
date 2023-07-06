@@ -17,17 +17,17 @@ function vq_load_fn() {
 
     let data = {
         "query": sparklis.currentPlace().sparql(),
-        "endpoint": sparklis.endpoint()
+        "endpoint": sparklis.endpoint(),
+        "schema": "DBpedia",
     }
 
     $.post("https://viziquer.app/api/public-diagram", data, function(json) {
         console.log(json);
 
-        if (json.statusCode == 200) {
-            let vq_url = "https://viziquer.app" + json.response.url;
-            console.log(vq_url);
-            $("#iframe-viziquer").attr("src", vq_url);
-        }
+        // if (json.statusCode == 200) {
+        let vq_url = "https://viziquer.app" + json.url;
+        console.log(vq_url);
+        $("#iframe-viziquer").attr("src", vq_url);
 
     }, "json");
 
@@ -39,17 +39,17 @@ function vq_new_fn() {
 
     let data = {
         "query": sparklis.currentPlace().sparql(),
-        "endpoint": sparklis.endpoint()
+        "endpoint": sparklis.endpoint(),
+        "schema": "DBpedia",
     }
 
     $.post("https://viziquer.app/api/public-diagram", data, function(json) {
         console.log(json);
 
-        if (json.statusCode == 200) {
-            let vq_url = "https://viziquer.app" + json.response.url;
-            console.log(vq_url);
-            window.open(vq_url);
-        }
+        // if (json.statusCode == 200) {
+        let vq_url = "https://viziquer.app" + json.url;
+        console.log(vq_url);
+        window.open(vq_url);
 
     }, "json");
 }
