@@ -1,6 +1,8 @@
 // reporting that this extension is active
 console.log("ViziQuer extension active");
 
+const VQ_HOST_URL = "https://viziquer.app"
+
 // ViziQuer debug button
 function vq_click_fn() {
     console.log("Debug info:")
@@ -15,43 +17,56 @@ function vq_click_fn() {
 // ViziQuer loading button
 function vq_load_fn() {
 
-    let data = {
+    const json_data = JSON.stringify({
         "query": sparklis.currentPlace().sparql(),
         "endpoint": sparklis.endpoint(),
         "schema": "DBpedia",
-    }
+        "isVisualizationNeeded": false
+    })
+   
+    $.ajax(
+        {
+            "url": VQ_HOST_URL + "/api/public-diagram",
+            "method": "POST",
+            "dataType": "json",
+            "contentType": "application/json",
+            "data": json_data
+        }
+    ).done( function(json_in) {
+        console.log(json_in);
 
-    $.post("https://viziquer.app/api/public-diagram", data, function(json) {
-        console.log(json);
-
-        // if (json.statusCode == 200) {
-        let vq_url = "https://viziquer.app" + json.url;
+        let vq_url = VQ_HOST_URL + json_in.url;
         console.log(vq_url);
         $("#iframe-viziquer").attr("src", vq_url);
+    });
 
-    }, "json");
-
-    // $("#iframe-viziquer").attr("src", "https://viziquer.app/public-diagram");
 }
 
 // ViziQuer open in new tab (button)
 function vq_new_fn() {
 
-    let data = {
+    const json_data = JSON.stringify({
         "query": sparklis.currentPlace().sparql(),
         "endpoint": sparklis.endpoint(),
         "schema": "DBpedia",
-    }
+        "isVisualizationNeeded": false
+    });
 
-    $.post("https://viziquer.app/api/public-diagram", data, function(json) {
-        console.log(json);
+    $.ajax(
+        {
+            "url": VQ_HOST_URL + "/api/public-diagram",
+            "method": "POST",
+            "dataType": "json",
+            "contentType": "application/json",
+            "data": json_data
+        }
+    ).done( function(json_in) {
+        console.log(json_in);
 
-        // if (json.statusCode == 200) {
-        let vq_url = "https://viziquer.app" + json.url;
+        let vq_url = VQ_HOST_URL + json_in.url;
         console.log(vq_url);
         window.open(vq_url);
-
-    }, "json");
+    });
 }
 
 
