@@ -1,7 +1,12 @@
 // reporting that this extension is active
 console.log("ViziQuer extension active");
 
-const VQ_HOST_URL = "https://viziquer.app"
+// const VQ_HOST_URL = "https://viziquer.app"
+const VQ_HOST_URL = "http://localhost:3000"
+
+// isVisualizationNeeded
+const VQ_VISUALIZATION = false
+
 
 // ViziQuer debug button
 function vq_click_fn() {
@@ -21,7 +26,7 @@ function vq_load_fn() {
         "query": sparklis.currentPlace().sparql(),
         "endpoint": sparklis.endpoint(),
         "schema": "DBpedia",
-        "isVisualizationNeeded": false
+        "isVisualizationNeeded": VQ_VISUALIZATION
     })
    
     $.ajax(
@@ -49,7 +54,7 @@ function vq_new_fn() {
         "query": sparklis.currentPlace().sparql(),
         "endpoint": sparklis.endpoint(),
         "schema": "DBpedia",
-        "isVisualizationNeeded": false
+        "isVisualizationNeeded": VQ_VISUALIZATION
     });
 
     $.ajax(
