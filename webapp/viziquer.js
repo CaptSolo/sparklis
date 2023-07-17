@@ -5,7 +5,7 @@ const VQ_HOST_URL = "https://viziquer.app"
 // const VQ_HOST_URL = "http://localhost:3000"
 
 // isVisualizationNeeded
-const VQ_VISUALIZATION = false
+const VQ_VISUALIZATION = true
 
 
 // ViziQuer debug button
@@ -28,7 +28,7 @@ function vq_load_fn() {
         "schema": "DBpedia",
         "isVisualizationNeeded": VQ_VISUALIZATION
     })
-   
+
     $.ajax(
         {
             "url": VQ_HOST_URL + "/api/public-diagram",
