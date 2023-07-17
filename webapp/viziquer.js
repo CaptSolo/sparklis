@@ -9,18 +9,17 @@ const VQ_VISUALIZATION = true
 
 
 // ViziQuer debug button
-function vq_click_fn() {
-    console.log("Debug info:")
+function vq_log_sparklis_info() {
+    console.log("Sparklis info:")
     console.log("- endpoint:", sparklis.endpoint());
-    console.log("- query:", sparklis.currentPlace().query());
-    console.log("- delta: ", sparklis.currentPlace().delta());
-    console.log("- permalink:", sparklis.currentPlace().permalink());
     console.log("- SPARQL query:");
     console.log(sparklis.currentPlace().sparql());
 }
 
 // ViziQuer loading button
 function vq_load_fn() {
+
+    vq_log_sparklis_info();
 
     const json_data = JSON.stringify({
         "query": sparklis.currentPlace().sparql(),
@@ -50,6 +49,8 @@ function vq_load_fn() {
 // ViziQuer open in new tab (button)
 function vq_new_fn() {
 
+    vq_log_sparklis_info();
+
     const json_data = JSON.stringify({
         "query": sparklis.currentPlace().sparql(),
         "endpoint": sparklis.endpoint(),
@@ -76,7 +77,6 @@ function vq_new_fn() {
 
 
 $(window).on("load", function() {
-    $("#button-viziquer").click(vq_click_fn);
     $("#button-viziquer-load").click(vq_load_fn);
     $("#button-viziquer-new").click(vq_new_fn);
     $("#iframe-viziquer").attr("src", "");
