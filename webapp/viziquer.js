@@ -24,7 +24,7 @@ function vq_load_fn() {
     const json_data = JSON.stringify({
         "query": sparklis.currentPlace().sparql(),
         "endpoint": sparklis.endpoint(),
-        "schema": "DBpedia",
+        "queryType": "SPARQL",
         "isVisualizationNeeded": VQ_VISUALIZATION
     })
 
