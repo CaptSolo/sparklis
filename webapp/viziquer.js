@@ -2,7 +2,9 @@
 console.log("ViziQuer extension active");
 
 const VQ_HOST_URL = "https://viziquer.app"
-// const VQ_HOST_URL = "http://localhost:3000"
+
+// Local ViziQuer instance:
+//const VQ_HOST_URL = "http://localhost:3000"
 
 // isVisualizationNeeded
 const VQ_VISUALIZATION = true
@@ -54,7 +56,7 @@ function vq_new_fn() {
     const json_data = JSON.stringify({
         "query": sparklis.currentPlace().sparql(),
         "endpoint": sparklis.endpoint(),
-        "schema": "DBpedia",
+        "queryType": "SPARQL",
         "isVisualizationNeeded": VQ_VISUALIZATION
     });
 
