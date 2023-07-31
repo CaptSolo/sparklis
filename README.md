@@ -151,3 +151,8 @@ Copyright © 2013 Sébastien Ferré, IRISA, Université de Rennes 1, France
 Licence: Apache Licence 2.0
 
 Citation: _Ferré, Sébastien. ‘Sparklis: An Expressive Query Builder for SPARQL Endpoints with Guidance in Natural Language’. Semantic Web 8(3) : 405-418. IOS Press, 2017._ [PDF](https://hal.inria.fr/hal-01485093/file/sparklis-preprint.pdf)
+
+# Acknowledgements
+
+Supported in part by Latvian Science Council project lzp-2021/1-0389 "Visual Queries in Distributed Knowledge Graphs" (since 2022).
+
