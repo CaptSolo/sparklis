@@ -2,7 +2,7 @@
 
 # Visual Query Form Addition to Sparklis
 
-This repository adds [ViziQuer](http://viziquer.lumii.lv/)-style visual query form to the original SPARKLIS visual query editor.
+This repository adds [ViziQuer](http://viziquer.lumii.lv/)-style visual query form to the original SPARKLIS SPARQL query builder.
 Try a [demo](http://viziquer.lumii.lv/sparklis).
 
 ### Acknowledgements
